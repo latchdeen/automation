@@ -1,0 +1,18 @@
+---
+# vars file for users
+grouplist:
+  - group: cloudadmins
+
+userlist:
+  - user: user1000
+    group1: cloudadmins
+    group2: wheel
+
+  - user: user2000
+    group1: cloudadmins
+    group2: wheel
+
+sudoersUpdate:
+  - path: /etc/sudoers
+    validate: /usr/sbin/visudo -cf %s
+    state: present

@@ -1,0 +1,5 @@
+---
+# vars file for system_profile
+fileinfo:
+  - path: /etc/profile
+    state: present

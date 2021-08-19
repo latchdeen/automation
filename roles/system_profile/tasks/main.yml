@@ -1,0 +1,14 @@
+---
+# tasks file for system_profile
+- name: "Perform file operations"
+  block:
+    - name: Adding ssh session timeout value
+      blockinfile:
+        path: "{{ item.path }}"
+        insertafter: EOF
+        backup: yes
+        state: "{{ item.state }}"
+        block: |
+          #This is a test block added by Ansible…… {{ lookup('env','HOSTNAME') }}
+          export TMOUT=1800
+      loop: "{{ fileinfo }}"

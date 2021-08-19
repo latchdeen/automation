@@ -1,0 +1,41 @@
+---
+# tasks file for users
+    - name: create user group
+      group:
+        name: "{{ item.group }}"
+        state: present
+      loop: "{{ grouplist }}"
+
+    - name: create users
+      user:
+        name: "{{ item.user }}"
+        state: present
+        groups: "{{ item.group1 }}, {{ item.group2 }}"
+        append: yes
+      loop: "{{ userlist }}"
+
+    - name: create users
+      authorized_key:
+        user: "{{ item.user }}"
+        state: present
+        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+      loop: "{{ userlist }}"
+
+    - name: Validate the sudoers file before saving, uncomment 
+      lineinfile:
+        path: "{{ item.path }}"
+        state: "{{ item.state }}"
+        regexp: '^# %wheel ALL=(ALL) NOPASSWD: ALL'
+        line: ' %wheel ALL=(ALL) NOPASSWD: ALL'
+        validate: "{{ item.validate }}"
+      loop: "{{ sudoersUpdate }}"
+
+
+    - name: Validate the sudoers file before saving, comment
+      lineinfile:
+        path: "{{ item.path }}"
+        state: "{{ item.state }}"
+        regexp: '^%wheel ALL=(ALL) ALL'
+        line: '#%wheel ALL=(ALL) ALL'
+        validate: "{{ item.validate }}"
+      loop: "{{ sudoersUpdate }}"
