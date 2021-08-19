@@ -13,6 +13,6 @@ userlist:
     group2: wheel
 
 sudoersUpdate:
-  - path: /etc/sudoers
+  - path: /etc/sudoers.d/nopasswd
     validate: /usr/sbin/visudo -cf %s
     state: present

@@ -24,18 +24,27 @@
     - name: Validate the sudoers file before saving, uncomment 
       lineinfile:
         path: "{{ item.path }}"
-        state: "{{ item.state }}"
-        regexp: '^# %wheel ALL=(ALL) NOPASSWD: ALL'
         line: ' %wheel ALL=(ALL) NOPASSWD: ALL'
+        create: yes
         validate: "{{ item.validate }}"
       loop: "{{ sudoersUpdate }}"
 
 
-    - name: Validate the sudoers file before saving, comment
-      lineinfile:
-        path: "{{ item.path }}"
-        state: "{{ item.state }}"
-        regexp: '^%wheel ALL=(ALL) ALL'
-        line: '#%wheel ALL=(ALL) ALL'
-        validate: "{{ item.validate }}"
-      loop: "{{ sudoersUpdate }}"
+
+    # - name: Validate the sudoers file before saving, uncomment 
+    #   lineinfile:
+    #     path: "{{ item.path }}"
+    #     state: "{{ item.state }}"
+    #     regexp: '^# %wheel ALL=(ALL) NOPASSWD: ALL'
+    #     line: ' %wheel ALL=(ALL) NOPASSWD: ALL'
+    #     validate: "{{ item.validate }}"
+    #   loop: "{{ sudoersUpdate }}"
+
+    # - name: Validate the sudoers file before saving, comment
+    #   lineinfile:
+    #     path: "{{ item.path }}"
+    #     state: "{{ item.state }}"
+    #     regexp: '^%wheel ALL=(ALL) ALL'
+    #     line: '#%wheel ALL=(ALL) ALL'
+    #     validate: "{{ item.validate }}"
+    #   loop: "{{ sudoersUpdate }}"
